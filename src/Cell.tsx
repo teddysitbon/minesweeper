@@ -3,22 +3,21 @@ import classNames from 'classnames';
 import './Cell.scss';
 
 type Props = {
-  onClick: () => void;
+  text: string;
+  onClick?: () => void;
 };
 
 function Cell(props: Props): JSX.Element {
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
   function handleClickCell(event: any): void {
-    console.log(event);
-    props.onClick();
+    // props.onClick();
     setIsRevealed(true);
   }
 
   function onCellRightClick(e: any) {
     e.preventDefault();
     e.stopPropagation();
-    console.log('right click');
     return false;
   }
 
@@ -31,7 +30,7 @@ function Cell(props: Props): JSX.Element {
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
-      Cell
+      {props.text}
     </div>
   );
 }
