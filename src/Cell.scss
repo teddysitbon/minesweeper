@@ -4,6 +4,11 @@
   display: grid;
   align-items: center;
   justify-items: center;
+  background-color: #c6c6c6;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-right: 2px solid gray;
+  border-bottom: 2px solid gray;
 
   &_clicked {
     background-color: gray;

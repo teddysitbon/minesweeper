@@ -20,6 +20,11 @@ function Board(): JSX.Element {
         rows.map((row, indexRow) =>
           columns.map((column, indexColumn) => 
             <Cell
+              key={`${indexRow}-${indexColumn}`}
+              index={{
+                row: indexRow,
+                column: indexColumn,
+              }}
               text={indexColumn.toString()}
             />
           )

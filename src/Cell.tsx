@@ -3,6 +3,10 @@ import classNames from 'classnames';
 import './Cell.scss';
 
 type Props = {
+  index: {
+    row: number,
+    column: number,
+  };
   text: string;
   onClick?: () => void;
 };
@@ -15,11 +19,14 @@ function Cell(props: Props): JSX.Element {
     setIsRevealed(true);
   }
 
+  /*
+  onContextMenu={(e) => onCellRightClick(e)}
   function onCellRightClick(e: any) {
     e.preventDefault();
     e.stopPropagation();
     return false;
   }
+  */
 
   return (
     <div
@@ -28,7 +35,6 @@ function Cell(props: Props): JSX.Element {
         { 'cell_clicked': isRevealed }
       )}
       onClick={handleClickCell}
-      onContextMenu={(e) => onCellRightClick(e)}
     >
       {props.text}
     </div>
