@@ -1,11 +1,11 @@
-import { memo, useState } from "react";
+import { memo, useState } from 'react';
 import classNames from 'classnames';
 import './Cell.scss';
 
 type Props = {
   index: {
-    row: number,
-    column: number,
+    row: number;
+    column: number;
   };
   text: string;
   onClick?: () => void;
@@ -30,10 +30,7 @@ function Cell(props: Props): JSX.Element {
 
   return (
     <div
-      className={classNames(
-        'cell',
-        { 'cell_clicked': isRevealed }
-      )}
+      className={classNames('cell', { cell_clicked: isRevealed })}
       onClick={handleClickCell}
     >
       {props.text}
