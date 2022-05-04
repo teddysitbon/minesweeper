@@ -10,7 +10,8 @@
   border-bottom: 4px solid gray;
 
   &_clicked {
-    background-color: gray;
+    background-color: rgb(97, 93, 93);
     cursor: default;
+    border: 1px solid black;
   }
 }

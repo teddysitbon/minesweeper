@@ -1,12 +1,16 @@
-import { memo } from 'react';
-import { ROWS, COLUMNS } from './constants';
+import { memo, useEffect, useReducer } from 'react';
 import Cell from './Cell';
 import './Board.scss';
-import { getArrayFromNumber } from 'helper';
+import { reducer } from './reducer';
+import { Action } from 'actions';
+import { initialEmptyBoard } from './constants';
 
 function Board(): JSX.Element {
-  const rows = getArrayFromNumber(ROWS);
-  const columns = getArrayFromNumber(COLUMNS);
+  const [state, dispatch] = useReducer(reducer, initialEmptyBoard);
+
+  useEffect(() => {
+    dispatch({ type: Action.InitiateEmptyBoard });
+  }, []);
 
   return (
     <div
@@ -16,8 +20,8 @@ function Board(): JSX.Element {
         gridTemplateRows: `repeat(20, 30px)`,
       }}
     >
-      {rows.map((row, indexRow) =>
-        columns.map((column, indexColumn) => (
+      {state.board.map((row, indexRow) =>
+        row.map((column, indexColumn) => (
           <Cell
             key={`${indexRow}-${indexColumn}`}
             index={{
