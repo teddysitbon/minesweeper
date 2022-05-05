@@ -1,15 +1,13 @@
-import { memo, useEffect, useReducer } from 'react';
+import { memo, useEffect } from 'react';
 import Cell from './Cell';
 import './Board.scss';
-import { reducer } from './reducer';
-import { Action } from 'actions';
-import { initialEmptyBoard } from './constants';
+import { useData } from './useData';
 
 function Board(): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialEmptyBoard);
+  const { state, initiateBoard, rightClickOnCell } = useData();
 
   useEffect(() => {
-    dispatch({ type: Action.InitiateEmptyBoard });
+    initiateBoard();
   }, []);
 
   return (
@@ -28,7 +26,9 @@ function Board(): JSX.Element {
               row: indexRow,
               column: indexColumn,
             }}
+            data={state.board[indexRow][indexColumn]}
             text={indexColumn.toString()}
+            onClick={rightClickOnCell}
           />
         )),
       )}

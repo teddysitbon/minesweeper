@@ -8,3 +8,9 @@ export type TypeCell = {
   hasFlag: boolean;
   isRevealed: boolean;
 };
+
+export type TypeUseData = {
+  state: TypeReducer;
+  initiateBoard: () => void;
+  rightClickOnCell: (cell: TypeCell, row: number, column: number) => void;
+};

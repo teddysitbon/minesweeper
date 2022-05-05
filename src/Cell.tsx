@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import classNames from 'classnames';
 import './Cell.scss';
+import { TypeCell } from './types';
 
 type Props = {
   index: {
@@ -8,15 +9,16 @@ type Props = {
     column: number;
   };
   text: string;
-  onClick?: () => void;
+  onClick: (cell: TypeCell, row: number, column: number) => void;
+  data: TypeCell;
 };
 
 function Cell(props: Props): JSX.Element {
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
-  function handleClickCell(event: any): void {
-    // props.onClick();
-    setIsRevealed(true);
+  function handleClickCell(): void {
+    props.onClick(props.data, props.index.row, props.index.column);
+    // setIsRevealed(true);
   }
 
   /*
