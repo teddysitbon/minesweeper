@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import classNames from 'classnames';
 import './Cell.scss';
 import { TypeCell } from './types';
@@ -16,7 +16,6 @@ type Props = {
 
 function Cell(props: Props): JSX.Element {
   function handleClickCell(): void {
-    console.log('click');
     props.onClick(props.index.row, props.index.column);
   }
 
