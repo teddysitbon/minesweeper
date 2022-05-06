@@ -3,15 +3,22 @@
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: #c6c6c6;
-  border-top: 4px solid white;
-  border-left: 4px solid white;
-  border-right: 4px solid gray;
-  border-bottom: 4px solid gray;
+  background: rgb(105, 135, 232);
+  background: linear-gradient(
+    180deg,
+    rgba(105, 135, 232, 1) 0%,
+    rgba(14, 78, 175, 1) 100%
+  );
+  border-radius: 5px;
+  color: white;
 
-  &_clicked {
-    background-color: #d6d3d3;
+  &_opened {
+    background: rgb(13, 18, 28);
+    background: linear-gradient(
+      180deg,
+      rgba(13, 18, 28, 1) 0%,
+      rgba(28, 28, 39, 1) 100%
+    );
     cursor: default;
-    border: none;
   }
 }

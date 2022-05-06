@@ -11,10 +11,14 @@ export function reducer(state: any, action: any): TypeReducer {
         board: initiateBoard(),
       };
     case ActionType.OpenCell:
-      console.log(action);
       return {
         ...state,
         board: openCell(state.board, action.payload),
+      };
+    case ActionType.ToggleFlag:
+      return {
+        ...state,
+        board: toggleFlag(state.board, action.payload),
       };
     default:
       throw new Error('Action not found');
@@ -25,7 +29,7 @@ export function initiateBoard(): TypeCell[][] {
   const initialCell = {
     hasMine: false,
     hasFlag: false,
-    isRevealed: false,
+    isOpened: false,
   };
 
   return Array.from(Array(ROWS), () => new Array(COLUMNS).fill(initialCell));
@@ -33,8 +37,24 @@ export function initiateBoard(): TypeCell[][] {
 
 export function openCell(
   board: TypeCell[][],
-  data: { cell: TypeCell; row: number; column: number },
+  index: { row: number; column: number },
 ): TypeCell[][] {
-  console.log(board[data.row][data.column]);
+  board[index.row][index.column] = {
+    ...board[index.row][index.column],
+    isOpened: true,
+  };
+
+  return board;
+}
+
+export function toggleFlag(
+  board: TypeCell[][],
+  index: { row: number; column: number },
+): TypeCell[][] {
+  board[index.row][index.column] = {
+    ...board[index.row][index.column],
+    hasFlag: true,
+  };
+
   return board;
 }

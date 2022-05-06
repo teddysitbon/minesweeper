@@ -9,33 +9,39 @@ type Props = {
     column: number;
   };
   text: string;
-  onClick: (cell: TypeCell, row: number, column: number) => void;
+  onClick: (row: number, column: number) => void;
+  onRightClick: (row: number, column: number) => void;
   data: TypeCell;
 };
 
 function Cell(props: Props): JSX.Element {
-  const [isRevealed, setIsRevealed] = useState<boolean>(false);
-
   function handleClickCell(): void {
-    props.onClick(props.data, props.index.row, props.index.column);
-    // setIsRevealed(true);
+    console.log('click');
+    props.onClick(props.index.row, props.index.column);
   }
 
-  /*
-  onContextMenu={(e) => onCellRightClick(e)}
-  function onCellRightClick(e: any) {
+  function onCellRightClick(e: any): void {
     e.preventDefault();
     e.stopPropagation();
-    return false;
+    props.onRightClick(props.index.row, props.index.column);
   }
-  */
 
   return (
     <div
-      className={classNames('cell', { cell_clicked: isRevealed })}
+      className={classNames('cell', {
+        cell_opened: props.data.isOpened || props.data.hasFlag,
+        cell_flag: props.data.hasFlag,
+      })}
       onClick={handleClickCell}
+      onContextMenu={(e) => onCellRightClick(e)}
     >
-      {props.text}
+      {props.data.hasFlag ? (
+        <span role="img" aria-label="flag">
+          🚩
+        </span>
+      ) : (
+        props.text
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useReducer } from 'react';
 import { reducer } from './reducer';
 import { initialEmptyBoard } from './constants';
 import { ActionType } from 'actions';
-import { TypeCell, TypeUseData } from './types';
+import { TypeUseData } from './types';
 
 export function useData(): TypeUseData {
   const [state, dispatch] = useReducer(reducer, initialEmptyBoard);
@@ -17,19 +17,24 @@ export function useData(): TypeUseData {
     });
   }, []);
 
-  const rightClickOnCell = useCallback(
-    (cell: TypeCell, row: number, column: number) => {
-      dispatch({
-        type: ActionType.OpenCell,
-        payload: { cell, row, column },
-      });
-    },
-    [],
-  );
+  const openCell = useCallback((row: number, column: number) => {
+    dispatch({
+      type: ActionType.OpenCell,
+      payload: { row, column },
+    });
+  }, []);
+
+  const toggleFlag = useCallback((row: number, column: number) => {
+    dispatch({
+      type: ActionType.ToggleFlag,
+      payload: { row, column },
+    });
+  }, []);
 
   return {
     state,
     initiateBoard,
-    rightClickOnCell,
+    openCell,
+    toggleFlag,
   };
 }

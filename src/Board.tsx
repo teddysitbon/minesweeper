@@ -2,9 +2,10 @@ import { memo, useEffect } from 'react';
 import Cell from './Cell';
 import './Board.scss';
 import { useData } from './useData';
+import { ROWS, COLUMNS } from './constants';
 
 function Board(): JSX.Element {
-  const { state, initiateBoard, rightClickOnCell } = useData();
+  const { state, initiateBoard, openCell, toggleFlag } = useData();
 
   useEffect(() => {
     initiateBoard();
@@ -14,8 +15,8 @@ function Board(): JSX.Element {
     <div
       className={'board'}
       style={{
-        gridTemplateColumns: `repeat(20, 30px)`,
-        gridTemplateRows: `repeat(20, 30px)`,
+        gridTemplateRows: `repeat(${ROWS}, 30px)`,
+        gridTemplateColumns: `repeat(${COLUMNS}, 30px)`,
       }}
     >
       {state.board.map((row, indexRow) =>
@@ -28,7 +29,8 @@ function Board(): JSX.Element {
             }}
             data={state.board[indexRow][indexColumn]}
             text={indexColumn.toString()}
-            onClick={rightClickOnCell}
+            onClick={openCell}
+            onRightClick={toggleFlag}
           />
         )),
       )}
