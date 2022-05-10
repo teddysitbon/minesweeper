@@ -1,6 +1,6 @@
 import { TypeCell, TypeReducer } from './types';
 import { ActionType } from './actions';
-import { ROWS, COLUMNS } from './constants';
+import { ROWS, COLUMNS, MINES } from './constants';
 
 export function reducer(state: any, action: any): TypeReducer {
   switch (action.type) {
@@ -26,13 +26,54 @@ export function reducer(state: any, action: any): TypeReducer {
 }
 
 export function initiateBoard(): TypeCell[][] {
+  // Need to Optim ?
   const initialCell = {
     hasMine: false,
     hasFlag: false,
     isOpened: false,
   };
 
-  return Array.from(Array(ROWS), () => new Array(COLUMNS).fill(initialCell));
+  const emptyBoard = Array.from(Array(ROWS), () => {
+    return new Array(COLUMNS).fill(initialCell);
+  });
+
+  return initiateMinesInBoard(emptyBoard);
+}
+
+function initiateMinesInBoard(board: TypeCell[][]): TypeCell[][] {
+  const mines = generateRandomMines(ROWS * COLUMNS, MINES);
+  let index = 0;
+
+  board.map((row, indexRow) => {
+    row.map((column, indexColumn) => {
+      if (mines.includes(index)) {
+        board[indexRow][indexColumn] = {
+          ...board[indexRow][indexColumn],
+          hasMine: true,
+        };
+      }
+      index++;
+    });
+  });
+
+  return board;
+}
+
+function generateRandomMines(
+  numberOfCells: number,
+  numberOfMines: number,
+): number[] {
+  const arrayToPickValue = Array.from(Array(numberOfCells).keys());
+  const arrayOfRandomValues = [];
+
+  do {
+    const randomIndex = Math.floor(Math.random() * arrayToPickValue.length);
+    arrayOfRandomValues.push(arrayToPickValue[randomIndex]);
+    arrayToPickValue.splice(randomIndex, 1);
+    numberOfMines--;
+  } while (numberOfMines > 0);
+
+  return arrayOfRandomValues.sort((a, b) => a - b);
 }
 
 export function openCell(

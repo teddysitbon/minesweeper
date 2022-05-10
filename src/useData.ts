@@ -8,10 +8,6 @@ export function useData(): TypeUseData {
   const [state, dispatch] = useReducer(reducer, initialEmptyBoard);
 
   useEffect(() => {
-    dispatch({ type: ActionType.InitiateEmptyBoard });
-  }, []);
-
-  const initiateBoard = useCallback(() => {
     dispatch({
       type: ActionType.InitiateEmptyBoard,
     });
@@ -33,7 +29,6 @@ export function useData(): TypeUseData {
 
   return {
     state,
-    initiateBoard,
     openCell,
     toggleFlag,
   };

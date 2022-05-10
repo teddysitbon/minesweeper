@@ -19,9 +19,9 @@ function Cell(props: Props): JSX.Element {
     props.onClick(props.index.row, props.index.column);
   }
 
-  function onCellRightClick(e: any): void {
-    e.preventDefault();
-    e.stopPropagation();
+  function onCellRightClick(event: React.MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
     props.onRightClick(props.index.row, props.index.column);
   }
 
@@ -34,13 +34,17 @@ function Cell(props: Props): JSX.Element {
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
-      {props.data.hasFlag ? (
+      {props.data.hasMine && (
+        <span role="img" aria-label="mine">
+          💣
+        </span>
+      )}
+      {props.data.hasFlag && (
         <span role="img" aria-label="flag">
           🚩
         </span>
-      ) : (
-        props.text
       )}
+      {!props.data.hasFlag && !props.data.hasMine && <span>{props.text}</span>}
     </div>
   );
 }

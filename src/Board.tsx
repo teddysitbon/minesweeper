@@ -1,15 +1,11 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import Cell from './Cell';
 import './Board.scss';
 import { useData } from './useData';
 import { ROWS, COLUMNS } from './constants';
 
 function Board(): JSX.Element {
-  const { state, initiateBoard, openCell, toggleFlag } = useData();
-
-  useEffect(() => {
-    initiateBoard();
-  }, []);
+  const { state, openCell, toggleFlag } = useData();
 
   return (
     <div
