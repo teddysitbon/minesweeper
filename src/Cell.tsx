@@ -10,6 +10,7 @@ type Props = {
   };
   text: string;
   onClick: (row: number, column: number) => void;
+  loseGame: () => void;
   onRightClick: (row: number, column: number, isActivated: boolean) => void;
   data: TypeCell;
 };
@@ -18,10 +19,14 @@ function Cell({
   index,
   text,
   onClick,
+  loseGame,
   onRightClick,
   data,
 }: Props): JSX.Element {
   function handleClickCell(): void {
+    if (data.hasMine) {
+      loseGame();
+    }
     onClick(index.row, index.column);
   }
 

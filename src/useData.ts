@@ -20,6 +20,12 @@ export function useData(): TypeUseData {
     });
   }, []);
 
+  const loseGame = useCallback(() => {
+    dispatch({
+      type: ActionType.LoseGame,
+    });
+  }, []);
+
   const toggleFlag = useCallback(
     (row: number, column: number, isActivated: boolean) => {
       dispatch({
@@ -33,6 +39,7 @@ export function useData(): TypeUseData {
   return {
     state,
     openCell,
+    loseGame,
     toggleFlag,
   };
 }

@@ -21,6 +21,11 @@ export function reducer(state: any, action: any): TypeReducer {
         ...state,
         board: toggleFlag(state.board, action.payload),
       };
+    case ActionType.LoseGame:
+      return {
+        ...state,
+        gameOver: true,
+      };
     default:
       throw new Error('Action not found');
   }

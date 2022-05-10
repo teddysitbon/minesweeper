@@ -12,5 +12,6 @@ export type TypeCell = {
 export type TypeUseData = {
   state: TypeReducer;
   openCell: (row: number, column: number) => void;
+  loseGame: () => void;
   toggleFlag: (row: number, column: number, isActivated: boolean) => void;
 };

@@ -3,4 +3,5 @@ export enum ActionType {
   RemoveFlag = 'REMOVE_FLAG',
   ToggleFlag = 'TOGGLE_FLOAG',
   OpenCell = 'OPEN_CELL',
+  LoseGame = 'LOSE_GAME',
 }
