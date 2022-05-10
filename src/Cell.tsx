@@ -10,41 +10,47 @@ type Props = {
   };
   text: string;
   onClick: (row: number, column: number) => void;
-  onRightClick: (row: number, column: number) => void;
+  onRightClick: (row: number, column: number, isActivated: boolean) => void;
   data: TypeCell;
 };
 
-function Cell(props: Props): JSX.Element {
+function Cell({
+  index,
+  text,
+  onClick,
+  onRightClick,
+  data,
+}: Props): JSX.Element {
   function handleClickCell(): void {
-    props.onClick(props.index.row, props.index.column);
+    onClick(index.row, index.column);
   }
 
   function onCellRightClick(event: React.MouseEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    props.onRightClick(props.index.row, props.index.column);
+    onRightClick(index.row, index.column, !data.hasFlag);
   }
 
   return (
     <div
       className={classNames('cell', {
-        cell_opened: props.data.isOpened || props.data.hasFlag,
-        cell_flag: props.data.hasFlag,
+        cell_opened: data.isOpened || data.hasFlag,
+        cell_flag: data.hasFlag,
       })}
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
-      {props.data.hasMine && (
+      {data.hasMine && (
         <span role="img" aria-label="mine">
           💣
         </span>
       )}
-      {props.data.hasFlag && (
+      {data.hasFlag && (
         <span role="img" aria-label="flag">
           🚩
         </span>
       )}
-      {!props.data.hasFlag && !props.data.hasMine && <span>{props.text}</span>}
+      {!data.hasFlag && !data.hasMine && <span>{text}</span>}
     </div>
   );
 }

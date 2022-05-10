@@ -52,11 +52,11 @@ export function openCell(
 
 export function toggleFlag(
   board: TypeCell[][],
-  index: { row: number; column: number },
+  data: { row: number; column: number; isActivated: boolean },
 ): TypeCell[][] {
-  board[index.row][index.column] = {
-    ...board[index.row][index.column],
-    hasFlag: true,
+  board[data.row][data.column] = {
+    ...board[data.row][data.column],
+    hasFlag: data.isActivated,
   };
 
   return board;

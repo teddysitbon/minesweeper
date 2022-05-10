@@ -20,12 +20,15 @@ export function useData(): TypeUseData {
     });
   }, []);
 
-  const toggleFlag = useCallback((row: number, column: number) => {
-    dispatch({
-      type: ActionType.ToggleFlag,
-      payload: { row, column },
-    });
-  }, []);
+  const toggleFlag = useCallback(
+    (row: number, column: number, isActivated: boolean) => {
+      dispatch({
+        type: ActionType.ToggleFlag,
+        payload: { row, column, isActivated },
+      });
+    },
+    [],
+  );
 
   return {
     state,
