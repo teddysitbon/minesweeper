@@ -1,31 +1,106 @@
 import { COLUMNS, MINES, ROWS } from './constants';
 import { TypeCell } from './types';
 
-export function initiateBoardWithMines(board: TypeCell[][]): TypeCell[][] {
-  const mines = generateRandomMines(ROWS * COLUMNS, MINES);
-  let index = 0;
+// EVITER PUSH DANS UN TABLEAU
 
-  board.forEach((row, indexRow) => {
-    row.forEach((_, indexColumn) => {
-      if (mines.includes(index)) {
-        board[indexRow][indexColumn] = {
-          ...board[indexRow][indexColumn],
-          hasMine: true,
-        };
-      }
-      index++;
+export function initiateBoard(): TypeCell[][] {
+  const board: TypeCell[][] = [];
+
+  for (let row = 0; row < ROWS; row++) {
+    board.push([]);
+    for (let column = 0; column < COLUMNS; column++) {
+      board[row].push({
+        hasMine: false,
+        hasFlag: false,
+        isOpened: false,
+        minesAround: 0,
+        index: {
+          row,
+          column,
+        },
+      });
+    }
+  }
+
+  /*
+  const emptyBoard = Array.from(Array(ROWS), () => {
+    return new Array(COLUMNS).fill({
+      hasMine: false,
+      hasFlag: false,
+      isOpened: false,
+      minesAround: 0,
     });
+  });
+  */
+
+  return initiateMinesAround(initiateBoardWithMines(board));
+}
+
+export function initiateMinesAround(board: TypeCell[][]): TypeCell[][] {
+  board.forEach((row, indexRow) => {
+    row.forEach((column, indexColumn) => {
+      if (!board[indexRow][indexColumn].hasMine) {
+        calculateMinesAround(board, board[indexRow][indexColumn]);
+      }
+    });
+  });
+  return board;
+}
+
+function calculateMinesAround(board: TypeCell[][], cell: TypeCell): TypeCell {
+  const cellsAround = [
+    { row: -1, column: -1 },
+    { row: -1, column: 0 },
+    { row: -1, column: 1 },
+    { row: 0, column: -1 },
+    { row: 0, column: 1 },
+    { row: 1, column: -1 },
+    { row: 1, column: 0 },
+    { row: 1, column: 1 },
+  ];
+
+  /*
+  let mineAround = 0;
+  cellsAround.forEach((cellAround) => {
+    if (
+      cellAround.row + cell.row > 0 &&
+      cellAround.column + cell.column > 0 &&
+      cell[row][column].hasMine
+    ) {
+      mineAround = mineAround + 1;
+    }
+  });
+  */
+
+  return cell;
+}
+
+function initiateBoardWithMines(board: TypeCell[][]): TypeCell[][] {
+  const mines = generateRandomMines(ROWS, COLUMNS, MINES);
+
+  mines.forEach((mine) => {
+    board[mine.row][mine.column] = {
+      ...board[mine.row][mine.column],
+      hasMine: true,
+    };
   });
 
   return board;
 }
 
-export function generateRandomMines(
-  numberOfCells: number,
+function generateRandomMines(
+  rows: number,
+  columns: number,
   numberOfMines: number,
-): number[] {
-  const arrayToPickValue = Array.from(Array(numberOfCells).keys());
+): { row: number; column: number }[] {
+  const arrayToPickValue = [];
   const arrayOfRandomValues = [];
+
+  for (let row = 0; row < rows; row++) {
+    for (let column = 0; column < columns; column++) {
+      arrayToPickValue.push({ row, column });
+    }
+  }
 
   while (numberOfMines > 0) {
     const randomIndex = Math.floor(Math.random() * arrayToPickValue.length);
@@ -34,5 +109,5 @@ export function generateRandomMines(
     numberOfMines--;
   }
 
-  return arrayOfRandomValues.sort((a, b) => a - b);
+  return arrayOfRandomValues;
 }

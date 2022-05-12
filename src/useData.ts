@@ -8,6 +8,7 @@ export function useData(): TypeUseData {
   const [state, dispatch] = useReducer(reducer, initialEmptyBoard);
 
   useEffect(() => {
+    console.log('Initiate Board');
     dispatch({
       type: ActionType.InitiateEmptyBoard,
     });

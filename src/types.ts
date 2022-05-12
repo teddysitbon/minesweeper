@@ -4,9 +4,14 @@ export type TypeReducer = {
 };
 
 export type TypeCell = {
+  index: {
+    row: number;
+    column: number;
+  };
   hasMine: boolean;
   hasFlag: boolean;
   isOpened: boolean;
+  minesAround: number;
 };
 
 export type TypeUseData = {

@@ -17,7 +17,7 @@ function Board(): JSX.Element {
         }}
       >
         {state.board.map((row, indexRow) =>
-          row.map((column, indexColumn) => (
+          row.map((_, indexColumn) => (
             <Cell
               key={`${indexRow}-${indexColumn}`}
               index={{
