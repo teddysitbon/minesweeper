@@ -25,7 +25,6 @@ function Board(): JSX.Element {
                 column: indexColumn,
               }}
               data={state.board[indexRow][indexColumn]}
-              text={indexColumn.toString()}
               onClick={openCell}
               loseGame={loseGame}
               onRightClick={toggleFlag}

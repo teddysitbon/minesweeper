@@ -8,7 +8,6 @@ type Props = {
     row: number;
     column: number;
   };
-  text: string;
   onClick: (row: number, column: number) => void;
   loseGame: () => void;
   onRightClick: (row: number, column: number, isActivated: boolean) => void;
@@ -17,7 +16,6 @@ type Props = {
 
 function Cell({
   index,
-  text,
   onClick,
   loseGame,
   onRightClick,
@@ -55,7 +53,7 @@ function Cell({
           🚩
         </span>
       )}
-      {!data.hasFlag && !data.hasMine && <span>{text}</span>}
+      {!data.hasFlag && !data.hasMine && <span>{data.minesAround}</span>}
     </div>
   );
 }

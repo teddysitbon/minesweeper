@@ -1,4 +1,4 @@
-import { COLUMNS, MINES, ROWS } from './constants';
+import { COLUMNS, MINES, ROWS, cellsAround } from './constants';
 import { TypeCell } from './types';
 
 // EVITER PUSH DANS UN TABLEAU
@@ -6,6 +6,7 @@ import { TypeCell } from './types';
 export function initiateBoard(): TypeCell[][] {
   const board: TypeCell[][] = [];
 
+  // RETHINK
   for (let row = 0; row < ROWS; row++) {
     board.push([]);
     for (let column = 0; column < COLUMNS; column++) {
@@ -33,46 +34,48 @@ export function initiateBoard(): TypeCell[][] {
   });
   */
 
-  return initiateMinesAround(initiateBoardWithMines(board));
+  const boardWithMines = initiateBoardWithMines(board);
+
+  return initiateMinesAround(boardWithMines);
 }
 
 export function initiateMinesAround(board: TypeCell[][]): TypeCell[][] {
   board.forEach((row, indexRow) => {
     row.forEach((column, indexColumn) => {
       if (!board[indexRow][indexColumn].hasMine) {
-        calculateMinesAround(board, board[indexRow][indexColumn]);
+        board[indexRow][indexColumn] = {
+          ...board[indexRow][indexColumn],
+          minesAround: calculateMinesAround(
+            board,
+            board[indexRow][indexColumn],
+          ),
+        };
       }
     });
   });
+
   return board;
 }
 
-function calculateMinesAround(board: TypeCell[][], cell: TypeCell): TypeCell {
-  const cellsAround = [
-    { row: -1, column: -1 },
-    { row: -1, column: 0 },
-    { row: -1, column: 1 },
-    { row: 0, column: -1 },
-    { row: 0, column: 1 },
-    { row: 1, column: -1 },
-    { row: 1, column: 0 },
-    { row: 1, column: 1 },
-  ];
+function calculateMinesAround(board: TypeCell[][], cell: TypeCell): number {
+  let minesAround = 0;
 
-  /*
-  let mineAround = 0;
   cellsAround.forEach((cellAround) => {
+    const indexRow = cellAround.row + cell.index.row;
+    const indexColumn = cellAround.column + cell.index.column;
+
     if (
-      cellAround.row + cell.row > 0 &&
-      cellAround.column + cell.column > 0 &&
-      cell[row][column].hasMine
+      indexRow >= 0 &&
+      indexRow < ROWS &&
+      indexColumn >= 0 &&
+      indexColumn < COLUMNS &&
+      board[indexRow][indexColumn].hasMine
     ) {
-      mineAround = mineAround + 1;
+      minesAround = minesAround + 1;
     }
   });
-  */
 
-  return cell;
+  return minesAround;
 }
 
 function initiateBoardWithMines(board: TypeCell[][]): TypeCell[][] {
