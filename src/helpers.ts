@@ -128,7 +128,8 @@ export function propagateCellOpening(
       indexRow >= 0 &&
       indexRow < ROWS &&
       indexColumn >= 0 &&
-      indexColumn < COLUMNS
+      indexColumn < COLUMNS &&
+      !board[indexRow][indexColumn].isOpened
     ) {
       openCell(board, { row: indexRow, column: indexColumn });
     }
