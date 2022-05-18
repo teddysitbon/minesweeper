@@ -1,3 +1,4 @@
+import { openCell } from './reducer';
 import { COLUMNS, MINES, ROWS, cellsAround } from './constants';
 import { TypeCell } from './types';
 
@@ -113,4 +114,25 @@ function generateRandomMines(
   }
 
   return arrayOfRandomValues;
+}
+
+export function propagateCellOpening(
+  board: TypeCell[][],
+  index: { row: number; column: number },
+): TypeCell[][] {
+  cellsAround.forEach((cellAround) => {
+    const indexRow = cellAround.row + index.row;
+    const indexColumn = cellAround.column + index.column;
+
+    if (
+      indexRow >= 0 &&
+      indexRow < ROWS &&
+      indexColumn >= 0 &&
+      indexColumn < COLUMNS
+    ) {
+      openCell(board, { row: indexRow, column: indexColumn });
+    }
+  });
+
+  return board;
 }

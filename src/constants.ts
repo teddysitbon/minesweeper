@@ -1,6 +1,6 @@
 export const ROWS = 10;
 export const COLUMNS = 10;
-export const MINES = 18;
+export const MINES = 10;
 
 export const initialEmptyBoard = {
   gameOver: false,

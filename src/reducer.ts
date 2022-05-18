@@ -1,6 +1,6 @@
 import { TypeCell, TypeReducer } from './types';
 import { ActionType } from './actions';
-import { initiateBoard } from './helpers';
+import { initiateBoard, propagateCellOpening } from './helpers';
 
 export function reducer(state: any, action: any): TypeReducer {
   switch (action.type) {
@@ -34,10 +34,20 @@ export function openCell(
   board: TypeCell[][],
   index: { row: number; column: number },
 ): TypeCell[][] {
+  const currentCell = board[index.row][index.column];
+
   board[index.row][index.column] = {
-    ...board[index.row][index.column],
+    ...currentCell,
     isOpened: true,
   };
+
+  if (
+    currentCell.minesAround === 0 &&
+    !currentCell.isOpened &&
+    !currentCell.hasMine
+  ) {
+    propagateCellOpening(board, index);
+  }
 
   return board;
 }
