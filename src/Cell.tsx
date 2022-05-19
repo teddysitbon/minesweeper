@@ -12,6 +12,7 @@ type Props = {
   loseGame: () => void;
   onRightClick: (row: number, column: number, isActivated: boolean) => void;
   data: TypeCell;
+  isVisible: boolean;
 };
 
 function Cell({
@@ -20,6 +21,7 @@ function Cell({
   loseGame,
   onRightClick,
   data,
+  isVisible,
 }: Props): JSX.Element {
   function handleClickCell(): void {
     if (data.hasMine) {
@@ -43,17 +45,19 @@ function Cell({
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
-      {data.hasMine && (
+      {(isVisible || data.isOpened) && data.hasMine && (
         <span role="img" aria-label="mine">
           💣
         </span>
       )}
-      {data.hasFlag && (
+      {(isVisible || data.isOpened) && data.hasFlag && (
         <span role="img" aria-label="flag">
           🚩
         </span>
       )}
-      {!data.hasFlag && !data.hasMine && <span>{data.minesAround}</span>}
+      {(isVisible || data.isOpened) && !data.hasFlag && !data.hasMine && (
+        <span>{data.minesAround}</span>
+      )}
     </div>
   );
 }
