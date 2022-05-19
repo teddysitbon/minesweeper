@@ -1,4 +1,5 @@
 import { memo, useState } from 'react';
+import classNames from 'classnames';
 import Cell from './Cell';
 import './Board.scss';
 import { useData } from './useData';
@@ -6,16 +7,18 @@ import { ROWS, COLUMNS } from './constants';
 
 function Board(): JSX.Element {
   const { state, openCell, loseGame, toggleFlag } = useData();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isDebbugging, setIsDebbugging] = useState<boolean>(false);
 
   function handleToggleVisibleBoard(): void {
-    setIsVisible((prevState) => !prevState);
+    setIsDebbugging((prevState) => !prevState);
   }
 
   return (
     <>
       <div
-        className={'board'}
+        className={classNames('board', {
+          board_debbuging: isDebbugging,
+        })}
         style={{
           gridTemplateRows: `repeat(${ROWS}, 30px)`,
           gridTemplateColumns: `repeat(${COLUMNS}, 30px)`,
@@ -33,7 +36,7 @@ function Board(): JSX.Element {
               onClick={openCell}
               loseGame={loseGame}
               onRightClick={toggleFlag}
-              isVisible={isVisible}
+              isDebbugging={isDebbugging}
             />
           )),
         )}
@@ -45,7 +48,7 @@ function Board(): JSX.Element {
           aria-label="monkey"
           onClick={handleToggleVisibleBoard}
         >
-          {isVisible ? <>🙈</> : <>🙉</>}
+          {isDebbugging ? <>🙈</> : <>🙉</>}
         </span>
       </div>
       {state.gameOver && <div>You lost !</div>}

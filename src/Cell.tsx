@@ -12,7 +12,7 @@ type Props = {
   loseGame: () => void;
   onRightClick: (row: number, column: number, isActivated: boolean) => void;
   data: TypeCell;
-  isVisible: boolean;
+  isDebbugging: boolean;
 };
 
 function Cell({
@@ -21,7 +21,7 @@ function Cell({
   loseGame,
   onRightClick,
   data,
-  isVisible,
+  isDebbugging,
 }: Props): JSX.Element {
   function handleClickCell(): void {
     if (!data.hasFlag) {
@@ -44,16 +44,17 @@ function Cell({
       className={classNames('cell', {
         cell_opened: data.isOpened,
         cell_flag: data.hasFlag,
+        cell_debbugging: isDebbugging,
       })}
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
-      {(isVisible || data.isOpened) && data.hasMine && (
+      {(isDebbugging || data.isOpened) && data.hasMine && (
         <span role="img" aria-label="mine">
           💣
         </span>
       )}
-      {data.hasFlag && !isVisible && (
+      {data.hasFlag && !isDebbugging && (
         <span role="img" aria-label="flag">
           🚩
         </span>
@@ -61,6 +62,7 @@ function Cell({
       {data.isOpened &&
         !data.hasFlag &&
         !data.hasMine &&
+        !isDebbugging &&
         data.minesAround > 0 && <span>{data.minesAround}</span>}
     </div>
   );
