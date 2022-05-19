@@ -1,11 +1,11 @@
 import { openCell } from './reducer';
 import { COLUMNS, MINES, ROWS, cellsAround } from './constants';
-import { TypeCell } from './types';
+import { TypeBoard, TypeCell } from './types';
 
 // EVITER PUSH DANS UN TABLEAU
 
-export function initiateBoard(): TypeCell[][] {
-  const board: TypeCell[][] = [];
+export function initiateBoard(): TypeBoard {
+  const board: TypeBoard = [];
 
   // RETHINK
   for (let row = 0; row < ROWS; row++) {
@@ -40,7 +40,7 @@ export function initiateBoard(): TypeCell[][] {
   return initiateMinesAround(boardWithMines);
 }
 
-export function initiateMinesAround(board: TypeCell[][]): TypeCell[][] {
+export function initiateMinesAround(board: TypeBoard): TypeBoard {
   board.forEach((row, indexRow) => {
     row.forEach((column, indexColumn) => {
       if (!board[indexRow][indexColumn].hasMine) {
@@ -58,7 +58,7 @@ export function initiateMinesAround(board: TypeCell[][]): TypeCell[][] {
   return board;
 }
 
-function calculateMinesAround(board: TypeCell[][], cell: TypeCell): number {
+function calculateMinesAround(board: TypeBoard, cell: TypeCell): number {
   let minesAround = 0;
 
   cellsAround.forEach((cellAround) => {
@@ -79,7 +79,7 @@ function calculateMinesAround(board: TypeCell[][], cell: TypeCell): number {
   return minesAround;
 }
 
-function initiateBoardWithMines(board: TypeCell[][]): TypeCell[][] {
+function initiateBoardWithMines(board: TypeBoard): TypeBoard {
   const mines = generateRandomMines(ROWS, COLUMNS, MINES);
 
   mines.forEach((mine) => {
@@ -117,9 +117,9 @@ function generateRandomMines(
 }
 
 export function propagateCellOpening(
-  board: TypeCell[][],
+  board: TypeBoard,
   index: { row: number; column: number },
-): TypeCell[][] {
+): TypeBoard {
   cellsAround.forEach((cellAround) => {
     const indexRow = cellAround.row + index.row;
     const indexColumn = cellAround.column + index.column;

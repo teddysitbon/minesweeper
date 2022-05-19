@@ -1,6 +1,6 @@
 export type TypeReducer = {
   gameOver: boolean;
-  board: TypeCell[][];
+  board: TypeBoard;
 };
 
 export type TypeCell = {
@@ -13,6 +13,8 @@ export type TypeCell = {
   isOpened: boolean;
   minesAround: number;
 };
+
+export type TypeBoard = TypeCell[][];
 
 export type TypeUseData = {
   state: TypeReducer;

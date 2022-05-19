@@ -1,4 +1,4 @@
-import { TypeCell, TypeReducer } from './types';
+import { TypeBoard, TypeReducer } from './types';
 import { ActionType } from './actions';
 import { initiateBoard, propagateCellOpening } from './helpers';
 
@@ -31,9 +31,9 @@ export function reducer(state: any, action: any): TypeReducer {
 }
 
 export function openCell(
-  board: TypeCell[][],
+  board: TypeBoard,
   index: { row: number; column: number },
-): TypeCell[][] {
+): TypeBoard {
   const currentCell = board[index.row][index.column];
 
   board[index.row][index.column] = {
@@ -53,9 +53,9 @@ export function openCell(
 }
 
 export function toggleFlag(
-  board: TypeCell[][],
+  board: TypeBoard,
   data: { row: number; column: number; isActivated: boolean },
-): TypeCell[][] {
+): TypeBoard {
   board[data.row][data.column] = {
     ...board[data.row][data.column],
     hasFlag: data.isActivated,
