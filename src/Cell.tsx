@@ -50,7 +50,7 @@ function Cell({
           💣
         </span>
       )}
-      {(isVisible || data.isOpened) && data.hasFlag && (
+      {data.hasFlag && (
         <span role="img" aria-label="flag">
           🚩
         </span>
