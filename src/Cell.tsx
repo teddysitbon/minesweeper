@@ -24,10 +24,13 @@ function Cell({
   isVisible,
 }: Props): JSX.Element {
   function handleClickCell(): void {
-    if (data.hasMine) {
-      loseGame();
+    if (!data.hasFlag) {
+      if (data.hasMine) {
+        loseGame();
+      }
+
+      onClick(index.row, index.column);
     }
-    onClick(index.row, index.column);
   }
 
   function onCellRightClick(event: React.MouseEvent): void {
@@ -39,7 +42,7 @@ function Cell({
   return (
     <div
       className={classNames('cell', {
-        cell_opened: data.isOpened || data.hasFlag,
+        cell_opened: data.isOpened,
         cell_flag: data.hasFlag,
       })}
       onClick={handleClickCell}
@@ -50,14 +53,15 @@ function Cell({
           💣
         </span>
       )}
-      {data.hasFlag && (
+      {data.hasFlag && !isVisible && (
         <span role="img" aria-label="flag">
           🚩
         </span>
       )}
-      {(isVisible || data.isOpened) && !data.hasFlag && !data.hasMine && (
-        <span>{data.minesAround}</span>
-      )}
+      {(isVisible || data.isOpened) &&
+        !data.hasFlag &&
+        !data.hasMine &&
+        data.minesAround > 0 && <span>{data.minesAround}</span>}
     </div>
   );
 }

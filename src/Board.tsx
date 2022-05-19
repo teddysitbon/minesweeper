@@ -8,7 +8,7 @@ function Board(): JSX.Element {
   const { state, openCell, loseGame, toggleFlag } = useData();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  function handleVisibleBoard(): void {
+  function handleToggleVisibleBoard(): void {
     setIsVisible((prevState) => !prevState);
   }
 
@@ -40,12 +40,12 @@ function Board(): JSX.Element {
       </div>
       <div>
         <span
-          className={'detective'}
+          className={'monkey'}
           role="img"
-          aria-label="detective"
-          onClick={handleVisibleBoard}
+          aria-label="monkey"
+          onClick={handleToggleVisibleBoard}
         >
-          🕵️
+          {isVisible ? <>🙈</> : <>🙉</>}
         </span>
       </div>
       {state.gameOver && <div>You lost !</div>}
