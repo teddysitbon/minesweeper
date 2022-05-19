@@ -58,7 +58,7 @@ function Cell({
           🚩
         </span>
       )}
-      {(isVisible || data.isOpened) &&
+      {data.isOpened &&
         !data.hasFlag &&
         !data.hasMine &&
         data.minesAround > 0 && <span>{data.minesAround}</span>}
