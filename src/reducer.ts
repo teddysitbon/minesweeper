@@ -39,6 +39,7 @@ export function openCell(
   board[index.row][index.column] = {
     ...currentCell,
     isOpened: true,
+    hasFlag: false,
   };
 
   if (

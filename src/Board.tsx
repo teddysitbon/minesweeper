@@ -1,5 +1,4 @@
 import { memo, useState } from 'react';
-import classNames from 'classnames';
 import Cell from './Cell';
 import './Board.scss';
 import { useData } from './useData';
@@ -16,9 +15,7 @@ function Board(): JSX.Element {
   return (
     <>
       <div
-        className={classNames('board', {
-          board_debbuging: isDebbugging,
-        })}
+        className={'board'}
         style={{
           gridTemplateRows: `repeat(${ROWS}, 30px)`,
           gridTemplateColumns: `repeat(${COLUMNS}, 30px)`,

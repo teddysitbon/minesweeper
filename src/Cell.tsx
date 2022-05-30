@@ -44,13 +44,18 @@ function Cell({
       className={classNames('cell', {
         cell_opened: data.isOpened,
         cell_flag: data.hasFlag,
-        cell_debbugging: isDebbugging,
       })}
       onClick={handleClickCell}
       onContextMenu={(e) => onCellRightClick(e)}
     >
       {(isDebbugging || data.isOpened) && data.hasMine && (
-        <span role="img" aria-label="mine">
+        <span
+          role="img"
+          aria-label="mine"
+          className={classNames({
+            cell_bomb: isDebbugging,
+          })}
+        >
           💣
         </span>
       )}
@@ -62,7 +67,6 @@ function Cell({
       {data.isOpened &&
         !data.hasFlag &&
         !data.hasMine &&
-        !isDebbugging &&
         data.minesAround > 0 && <span>{data.minesAround}</span>}
     </div>
   );

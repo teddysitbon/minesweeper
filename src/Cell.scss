@@ -22,7 +22,32 @@
     cursor: default;
   }
 
-  &_debbugging {
-    background: rgb(187, 187, 187);
+  &_bomb {
+    -webkit-animation: 1500ms linear infinite blink;
+    animation: 1500ms linear infinite blink;
+  }
+}
+
+
+@-webkit-keyframes blink {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+@keyframes blink {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: hidden;
   }
 }
