@@ -1,8 +1,8 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import Cell from './Cell';
 import './Board.scss';
 import { useData } from './useData';
-import { ROWS, COLUMNS } from './constants';
+import { ROWS, COLUMNS, MINES } from './constants';
 
 function Board(): JSX.Element {
   const { state, openCell, loseGame, toggleFlag } = useData();
@@ -12,7 +12,19 @@ function Board(): JSX.Element {
     setIsDebbugging((prevState) => !prevState);
   }
 
-  return (
+  const isInitiated = useMemo(() => {
+    return state.board.length > 0;
+  }, [state.board.length]);
+
+  const getNumberOfFlags = useCallback(() => {
+    return state.board
+      .map((row) =>
+        row.filter((cell) => cell.hasFlag).reduce((sum) => sum + 1, 0),
+      )
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+  }, [state.board]);
+
+  return isInitiated ? (
     <>
       <div
         className={'board'}
@@ -49,7 +61,10 @@ function Board(): JSX.Element {
         </span>
       </div>
       {state.gameOver && <div>You lost !</div>}
+      {<div>{MINES - getNumberOfFlags()}</div>}
     </>
+  ) : (
+    <>Loading</>
   );
 }
 
