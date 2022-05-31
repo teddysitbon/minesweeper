@@ -9,7 +9,7 @@ export function useData(): TypeUseData {
 
   useEffect(() => {
     dispatch({
-      type: ActionType.InitiateEmptyBoard,
+      type: ActionType.InitiateBoard,
     });
   }, []);
 
@@ -23,6 +23,12 @@ export function useData(): TypeUseData {
   const loseGame = useCallback(() => {
     dispatch({
       type: ActionType.LoseGame,
+    });
+  }, []);
+
+  const restartGame = useCallback(() => {
+    dispatch({
+      type: ActionType.InitiateBoard,
     });
   }, []);
 
@@ -40,6 +46,7 @@ export function useData(): TypeUseData {
     state,
     openCell,
     loseGame,
+    restartGame,
     toggleFlag,
   };
 }

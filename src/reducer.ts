@@ -4,7 +4,7 @@ import { initiateBoard, propagateCellOpening } from './helpers';
 
 export function reducer(state: any, action: any): TypeReducer {
   switch (action.type) {
-    case ActionType.InitiateEmptyBoard:
+    case ActionType.InitiateBoard:
       return {
         ...state,
         gameOver: false,

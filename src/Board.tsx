@@ -5,7 +5,7 @@ import { useData } from './useData';
 import { ROWS, COLUMNS, MINES } from './constants';
 
 function Board(): JSX.Element {
-  const { state, openCell, loseGame, toggleFlag } = useData();
+  const { state, openCell, loseGame, restartGame, toggleFlag } = useData();
   const [isDebbugging, setIsDebbugging] = useState<boolean>(false);
 
   function handleToggleVisibleBoard(): void {
@@ -60,6 +60,7 @@ function Board(): JSX.Element {
           {isDebbugging ? <>🙈</> : <>🙉</>}
         </span>
       </div>
+      <button onClick={restartGame}>🔃</button>
       {state.gameOver && <div>You lost !</div>}
       {<div>{MINES - getNumberOfFlags()}</div>}
     </>
