@@ -24,6 +24,21 @@ function Board(): JSX.Element {
       .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
   }, [state.board]);
 
+  const getNumberOfOpenCells = useCallback(() => {
+    return state.board
+      .map((row) =>
+        row.filter((cell) => cell.isOpened).reduce((sum) => sum + 1, 0),
+      )
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+  }, [state.board]);
+
+  const isWin = useCallback(
+    () => !state.gameOver && COLUMNS * ROWS - getNumberOfOpenCells() === MINES,
+    [getNumberOfOpenCells, state.gameOver],
+  );
+
+  console.log(isWin());
+
   return isInitiated ? (
     <>
       <div
